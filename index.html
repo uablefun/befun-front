@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Configurator</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400&display=swap">
+    <style>
+        /* 헤더 스타일 */
+        .header {
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            padding-left: 20px;
+        }
+
+        /* 왼쪽 네비게이션 스타일 */
+        .nav-left {
+            list-style: none;
+            display: flex;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* 로고 스타일 */
+        .logo {
+            margin-right: 0;
+        }
+
+        /* 오른쪽 네비게이션 스타일 */
+        .nav-right {
+            list-style: none;
+            display: flex;
+            gap: 10px;
+            margin: 0;
+            padding-right: 20px;
+            font-size: 12px;
+        }
+
+        .nav-icon {
+            margin: 0;
+        }
+        
+        /* 푸터footer */
+        footer {
+            font-family:Arial,"Noto Sans Regular","맑은 고딕","malgun gothic","돋움","dotum";
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            margin-top: 20px;
+        }
+
+        footer a {
+    	color: #eee;
+    	transition: color 0.3s ease;  /* 0.3초 동안 색상 변경 */
+		}
+        
+		footer a:hover {
+   		color: #392;  /* 마우스를 올렸을 때의 색상 */
+		}
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            height: 200px;
+            background-color: #333;
+            margin: 10px auto;
+        }
+
+        .logo {
+            margin-left: 20px;      
+        }
+
+        .logo a {
+         font-size: 12px;
+         
+        }
+        
+        .company-info, .contact-info, .account-info, .agree-info, .sns-links  {
+            font-size: 12px;
+			margin-right: 10px;
+            line-height: 1;
+            text-align: left;
+        }
+
+        .links a, .sns-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+            
+        }
+
+        .links a:hover, .sns-links a:hover {
+            text-decoration: none;
+        }
+
+        .copyright {
+            margin-top: 20px;
+            font-size: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!-- header시작 -->
+<header class="header">
+    <div class="header-container">
+        <a href="/befun/"><img class="logo" src="imgs/icon/main_logo_new.png"></a>
+        <ul class="nav-left">
+            <li><a href="/befun/" class="nav-item"></a></li>
+        </ul>     
+        <ul class="nav-right">
+            <li class="nav-icon"><a href="/myshop/index.html">myshop</a></li>
+            <li class="nav-icon">
+                <a href="/order/basket.html" module="Layout_orderBasketcount">
+                    장바구니
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>
+        <!--div style="font-size:11px; padding: 0 20px 0 0" >
+            	<a data-ez-item="join" module="Layout_statelogoff" href="/member/agreement.html">회원가입</a>
+				<a data-ez-item="login" module="Layout_statelogoff" href="/member/login.html">로그인</a>
+				<a data-ez-item="modify" module="Layout_stateLogon" href="/member/modify.html">내정보수정</a>
+				<a data-ez-item="logout" module="Layout_stateLogon" href="{$action_logout}">로그아웃</a>
+				<a data-ez-item="order" href="/myshop/order/list.html">주문조회</a>
+				<a data-ez-item="mypage" module="Layout_stateLogon" href="/myshop/index.html">마이페이지</a>
+				<a data-ez-item="recent" href="/product/recent_view_product.html">최근본상품</a>
+        </div-->
+<!-- header끝 -->
+<div id="main-container">
+    <div id="modal-share" class="modal">
+        <div id="modal-content-share"> 
+            <button id="modal-close-button-share" class="modal-close-button">
+                <img src="imgs/icon/icon_x.svg" alt="Close Icon">
+            </button> 
+            <h3 class="modal-title">나만의 디자인을 공유하세요.</h3>
+            <p class="modal-script">Befun은 사용자 스스로 가구를 맞춤 구성할 수 있는 특별한 기능을 제공합니다. 스스로 디자인한 독특한 가구 스타일을 다른 사람에게 공유해보세요.</p>
+            <br/><br/>
+                <div class="share-container"><input class="share-input" id="share-result"  placeholder="share link">
+                <button class="share-button" id="share-result-copy">
+                    <img src="imgs/icon/icon_copy.svg" alt="Copy Icon">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="modal-ar" class="modal">
+        <div id="modal-content-ar">
+            <button id="modal-close-button-ar" class="modal-close-button">
+                <img src="imgs/icon/icon_x.svg" alt="Close Icon">
+            </button> 
+            <h3 class="modal-title">AR 보기</h3>
+            <p class="modal-script">QR 코드를 스캔하여 내가 디자인한 가구를 현실로 가져오세요.</p>
+            <img id="qrcode" alt="QR Code">
+        </div>
+    </div>
+    <div id="configurator"  style="border-bottom: 1px solid #eee">
+        <div id="canvas-container">
+            <canvas id="canvas"></canvas>
+            <div id="control-panel">
+                <button id="view-labels" class="control-toggles">
+                    <img
+                    src="imgs/icon/icon_ruler.svg"
+                    alt="grid"
+                    class=""
+                    />
+                </button>
+                <button id="share-link" class="control-toggles">
+                    <img
+                    src="imgs/icon/icon_share.svg"
+                    alt="grid"
+                    class=""
+                    />
+                </button>
+                <button id="view-ar" class="control-toggles">
+                    <img
+                    src="imgs/icon/icon_ar.svg"
+                    alt="grid"
+                    class=""
+                    />
+                </button>
+            </div>
+        </div>
+        <div id="gui">
+            <div class="gui-header">
+                <p class="title" id="product-title">다용도 수납장 기본형</p>
+            </div>
+            <!-- 카테고리 -->
+            <div class="options-grid">
+                <div class="options-row">
+                    <!-- 첫 번째 컬럼 - 25% -->
+                    <div class="option-column column-25">
+                            Style
+                    </div>
+                    
+                    <!-- 두 번째 컬럼 - 75% -->
+                    <div class="option-column column-75" >
+                        <div class="style-grid">
+                            <button class="variant-button active" data-variant="grid">
+                                <img
+                                src="imgs/icon/icon_grid_black.svg"
+                                alt="grid"
+                                class="style-img"
+                                />
+                                <br />
+                                <span>Grid</span>    
+                            </button>
+                            <button class="variant-button" data-variant="slant">
+                                <img
+                                    src="imgs/icon/icon_slant_black.svg"
+                                    alt="slant"
+                                    class="style-img"
+                                />
+                                <br/>
+                                <span>Slant</span>
+                            </button>
+                            <button class="variant-button" data-variant="pixel">
+                                <img
+                                    src="imgs/icon/icon_pixel_black.svg"
+                                    alt="pixel"
+                                    class="style-img"
+                                />
+                                <br/>
+                                <span>Pixel</span>
+                            </button>
+                            <button class="variant-button" data-variant="gradient">
+                                <img
+                                    src="imgs/icon/icon_gradient_black.svg"
+                                    alt="gradient"
+                                    class="style-img"
+                                />
+                                <br/>
+                                <span>Gradient</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="options-grid">
+                <div class="options-row">
+                    <!-- 첫 번째 컬럼 - 25% -->
+                    <div class="option-column column-25">
+                        Density
+                    </div>
+                    <!-- 두 번째 컬럼 - 75% -->
+                    <div class="option-column column-75" >
+                        <div class="slider-container">
+                            <button class="slider-button" data-action="density-decrease">
+                                <img src="imgs/icon/icon_minus.svg" alt="minus" />
+                            </button>
+                            <div class="slider-wrapper">
+                            <input type="range" class="slider" id="density" min="0" max="100"  step="1">
+                            <span class="slider-value" id="density-value">50%</span>
+                            </div>
+                            <button class="slider-button" data-action="density-increase">
+                                <img src="imgs/icon/icon_plus.svg" alt="plus" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="options-grid">
+                <div class="options-row">
+                    <!-- 첫 번째 컬럼 - 25% -->
+                    <div class="option-column column-25">  
+                            Width
+                    </div>
+                    <!-- 두 번째 컬럼 - 75% -->
+                    <div class="option-column column-75">
+                        <div class="slider-container">
+                            <button class="slider-button" data-action="width-decrease">
+                                <img src="imgs/icon/icon_minus.svg" alt="minus" />
+                            </button>
+                            <div class="slider-wrapper">
+                            <input type="range" class="slider" id="width" min="30" max="450" value="90" step="1">
+                            <span class="slider-value" id="width-value">90cm</span>
+                            </div>
+                            <button class="slider-button" data-action="width-increase">
+                                <img src="imgs/icon/icon_plus.svg" alt="plus" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="options-grid">
+                <div class="options-row">
+                    <!-- 첫 번째 컬럼 - 25% -->
+                    <div class="option-column column-25">     
+                        Height
+                    </div>
+                    <!-- 두 번째 컬럼 - 75% -->
+                    <div class="option-column column-75">
+                        <div class="slider-container">
+                            <button class="slider-button" data-action="height-decrease">
+                                <img src="imgs/icon/icon_minus.svg" alt="minus" />
+                            </button>
+                            <div class="slider-wrapper">
+                            <input type="range" class="slider" id="height" min="36" max="240" value="70" step="34">
+                            <span class="slider-value" id="height-value">70cm</span>
+                            </div>
+                            <button class="slider-button" data-action="height-increase">
+                                <img src="imgs/icon/icon_plus.svg" alt="plus" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="options-grid">
+                <div class="options-row">
+                    <!-- 첫 번째 컬럼 - 25% -->
+                    <div class="option-column column-25"> 
+                        Depth<span id="depth-value" style='display:none;'></span>
+                    </div>
+                    <!-- 두 번째 컬럼 - 75% -->
+                    <div class="option-column column-75">
+                        <div class="button-container">
+                            <button class="depth-button" data-depth="24">24cm</button>
+                            <button class="depth-button active" data-depth="30">30cm</button>
+                            <button class="depth-button" data-depth="40">40cm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="options-grid">
+                <div class="options-row">
+                    <!-- 첫 번째 컬럼 - 25% -->
+                    <div class="option-column column-25">    
+                            Back Panel
+                    </div>
+                    <!-- 두 번째 컬럼 - 75% -->
+                    <div class="option-column column-75">
+                        <div class="radio-group">
+                            <button id="toggle-backpanel" data-state="off">
+                                <img src="imgs/icon/toggle_off.svg" alt="Toggle Back Panel">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="options-grid">
+                <div class="options-row">
+                    <!-- 첫 번째 컬럼 - 25% -->
+                    <div class="option-column column-25">
+                        Color
+                    </div>
+                    <!-- 두 번째 컬럼 - 75% -->
+                    <div class="option-column column-75">
+                        <div class="color-picker">
+                            <button class="color-button" data-image="../imgs/icon/colors_basic/0104TX.svg" data-color-name="black">
+                                <img src="imgs/icon/colors_basic/0104TX.svg" alt="wood001" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_basic/2700TX.svg" data-color-name="white">
+                                <img src="imgs/icon/colors_basic/2700TX.svg" alt="wood002" />
+                            </button>
+                            <button class="color-button selected" data-image="../imgs/icon/colors_basic/7116UM.svg" data-color-name="gray">
+                                <img src="imgs/icon/colors_basic/7116UM.svg" alt="wood003" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="options-grid">
+                <div class="options-row">
+                    <!-- 첫 번째 컬럼 - 25% -->
+                    <div class="option-column column-25">
+                        Color (Fun+)
+                    </div>
+                    <!-- 두 번째 컬럼 - 75% -->
+                    <div class="option-column column-75">
+                        <div class="color-picker">
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/0103TX.svg" data-color-name="ivory+">
+                                <img src="imgs/icon/colors_custom/0103TX.svg" alt="wood004" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/1502TX.svg" data-color-name="pink+">
+                                <img src="imgs/icon/colors_custom/1502TX.svg" alt="wood005" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/2023TX.svg" data-color-name="blue+">
+                                <img src="imgs/icon/colors_custom/2023TX.svg" alt="wood006" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/3005TX.svg" data-color-name="orange+">
+                                <img src="imgs/icon/colors_custom/3005TX.svg" alt="wood007" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/3020TX.svg" data-color-name="green+">
+                                <img src="imgs/icon/colors_custom/3020TX.svg" alt="wood008" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/3022TX.svg" data-color-name="navy+">
+                                <img src="imgs/icon/colors_custom/3022TX.svg" alt="wood009" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/4302SM.svg" data-color-name="skyblue+">
+                                <img src="imgs/icon/colors_custom/4302SM.svg" alt="wood010" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/4305SM.svg" data-color-name="lightgreen+">
+                                <img src="imgs/icon/colors_custom/4305SM.svg" alt="wood011" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/4306SM.svg" data-color-name="mint+">
+                                <img src="imgs/icon/colors_custom/4306SM.svg" alt="wood012" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/7021TX.svg" data-color-name="lemon+">
+                                <img src="imgs/icon/colors_custom/7021TX.svg" alt="wood013" />
+                            </button>
+                            <button class="color-button" data-image="../imgs/icon/colors_custom/7311TX.svg" data-color-name="redviolet+">
+                                <img src="imgs/icon/colors_custom/7311TX.svg" alt="wood014" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <!-- 백패널, 장바구니, 디자인저장, 다운로드, 사이즈보기 -->
+            <div class="option-grid">
+                <div class="options-row">
+                    <!-- 첫 번째 컬럼 - 25% -->
+                    <div class="option-column column-25">
+                        <div class="price-info">       
+                            <span id="original-price">₩0</span>
+                            <span id="discount-rate">0%</span>   
+                        </div>
+                    </div>
+                    <div class="option-column column-75">
+                        <span id="final-price">₩0</span>   
+                    </div>
+                </div>
+            </div>
+            <button class="buybtn" id="buyButton">구매하기</button>
+            <div class="options-text">
+                <span>Made in KR - Ships in 5-6 weeks</span>
+            </div>
+            <!-- <button class="action-button save-design">나의 가구 저장하기</button> -->
+            
+            <!-- <div id="share-link"></div>
+            <p id="price-value" style="display: none;"></p>
+            <button  id="buyButton">구매하기</button> -->
+            
+            <div class="options">
+                <button class="action-button" data-action="export-obj">Export as OBJ</button>
+                <button class="action-button" data-action="export-glb">Export as GLB</button>
+                <!-- <button class="action-button" data-action="export-dxf">Export as dxf</button> -->
+            </div>
+            <!-- <button onclick="openARViewer()">AR로 보기</button> -->
+            <!-- <button id="arButton">AR 보기</button> -->
+        </div>
+    </div>
+
+    <!-- 상세페이지 -->
+    <div id="product-detail">
+        <!-- 여기에 상세 정보 내용을 추가하세요 -->
+        <h2>제품 상세 정보</h2>
+        <div class="carousel-container">
+            <div class="main-image">
+                <img id="mainImage" src="imgs/carousel/1/0.jpg" alt="Main Image">
+            </div>
+            <div id="thumbnailContainer" class="thumbnail-container">
+                <!-- Thumbnails will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+    <!-- footer시작 -->
+    <!--footer>
+        <div class="footer-content">
+            <img src="imgs/icon/main_logo_white.png"/>
+         </div>
+    </footer-->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">
+            <a href="/befun/"><img src="imgs/icon/main_logo_white.png"></a> <br/>      
+            </div>
+            
+             <div class="company-info">
+                <p>상호명 주식회사 유에이블</p>
+                <p>대표자명 이진수</p>
+                <p>사업장주소 06130 서울시 강남구 언주로 97길 7 Tel.02-557-6636</p>
+                <p>사업자등록번호 473-86-02122</p>
+                <p>통신판매업 신고번호 2023-서울강남-05911[사업자정보확인]</p>
+                <p>개인정보보호책임자 이진수</p>
+                <p>Copyright © BEFUN. All Rights Reserved.</p>
+            </div>   
+            
+            <div class="contact-info">
+                <p>고객센터 정보</p>
+                <p>상담/구문접수 010-8983-6637</p>
+                <p>상담/구문 이메일</p>
+                <p>admin@uable.co.kr</p>
+                <p>CS운영시간 10:00~18:00</p>
+            </div>
+            <div class="account-info">
+                <p>결제정보</p>
+                <p>무통장 계좌정보</p>
+                <p>국민은행 777777-77-777777 </p>
+                <p>예금주 주식회사유에이블</p>
+            </div>
+          	<div class="agree-info">
+                <!--p><a href="/shopinfo/company.html">회사소개</a></p-->
+                <p><a href="/member/mall_agreement.html">이용약관</a></p>
+                <p><a href="/member/privacy.html">개인정보처리방침</a></p>
+                <p><a href="/shopinfo/guide.html">이용안내</a></p>
+        	</div>      
+        </div>
+        
+        <!--div class="sns-links">
+                <p>SNS</p>
+                <a href="#">instagram</a>
+                <a href="#">youtube</a>
+                <a href="#">facebook</a>
+                <a href="#">kakao</a>
+                <a href="#">twitter</a>
+                <a href="#">blog</a>
+       	</div-->
+      </footer>
+    <!-- footer끝 -->
+</div>
+<!-- QR 코드가 표시될 모달 -->
+<div id="qrModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center;">
+    <div style="background: white; padding: 20px; border-radius: 10px;">
+        <h3>이 QR 코드를 스캔하세요!</h3>
+        <div id="qrcode"></div>
+        <button onclick="closeQRModal()">닫기</button>
+    </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/OBJExporter.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/USDZExporter.js"></script>
+    <script src="https://unpkg.com/fflate@0.6.9/umd/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three-dxf@0.1.1/build/three-dxf.min.js"></script>    
+
+    <!-- 순서가 바뀌면 로딩에러가 있을수 있음. app.js와 handler는 앞쪽으로 -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script> <!-- QR 코드 라이브러리 -->
+    
+    <script src="app.js"></script>
+    <script src="components/designSharer.js"></script>
+    <script src="components/arController.js"></script>
+    <script src="components/eventHandlers.js"></script>
+    <script src="components/addBox.js"></script>
+    <script src="components/stage.js"></script>
+    <script src="components/styleGrid.js"></script>
+    <script src="components/styleSlant.js"></script>
+    <script src="components/stylePixel.js"></script>
+    <script src="components/styleGradient.js"></script>
+    <script src="components/styleMosaic.js"></script>
+    <!-- <script src="components/stylePattern.js"></script> -->
+    <script src="components/light.js"></script>
+    <script src="components/modelConverter.js"></script>
+    <script src="components/toggleDimension.js"></script>
+    <script src="components/colorSelect.js"></script>
+    <script src="components/changeScale.js"></script>
+    <script src="components/interactionHandler.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script> <!-- QR 코드 라이브러리 --> 
+    
+    <!-- 후처리 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/three@0.137.5/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.137.5/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.137.5/examples/js/postprocessing/OutlinePass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.137.5/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.137.5/examples/js/shaders/FXAAShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.137.5/examples/js/postprocessing/ShaderPass.js"></script> -->
+</body>
+</html>       

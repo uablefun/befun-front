@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Furniture Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div id="guide-text">AR 로딩중입니다...</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const serverURL = "https://befun-back-69ti.onrender.com";
+            const glbFormat = ".glb";
+
+            function isIOS() {
+                return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            }
+
+            function load3DModelIntoViewer() {
+                const params = new URLSearchParams(window.location.search);
+                const fileName = params.get('state'); // 'state' 파라미터 값을 가져옵니다.
+
+                if (fileName) {
+                    if (isIOS()) {
+                        document.getElementById("guide-text").innerText = "AR 기능은 IOS 환경에서 이용하실 수 없습니다. 불편을 끼쳐드려 죄송합니다.";
+                    } else {
+                        const modelURL = serverURL + "/upload/" + fileName + glbFormat;
+                        const viewerUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${modelURL}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;`;
+                        window.location.href = viewerUrl;
+                    }
+                } else {
+                    document.body.innerHTML = '<div>파일 이름이 없습니다. AR 모델을 로드할 수 없습니다.</div>';
+                }
+            }
+
+            load3DModelIntoViewer();
+        });
+    </script>
+</body>
+</html>
